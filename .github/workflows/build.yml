@@ -311,7 +311,7 @@ jobs:
         working-directory: Iris
         env:
           VOLMLIB_DIR: ${{ github.workspace }}/VolmLib
-        run: ./gradlew buildAllToOut --no-parallel -PuseLocalVolmLib=true
+        run: ./gradlew buildAllToOut --no-parallel -PuseLocalVolmLib=true --stacktrace
 
       - name: Upload built jars
         uses: actions/upload-artifact@v4
