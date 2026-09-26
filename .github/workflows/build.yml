@@ -296,6 +296,14 @@ jobs:
             -e 's/java\.util\.Map<CompoundTag, BlockState> innerDecodeCache/java.util.Map<art.arcane.volmlib.util.nbt.tag.Tag<?>, BlockState> innerDecodeCache/' \
             -e 's/java\.util\.Map<CompoundTag, BlockState> outerDecodeCache/java.util.Map<art.arcane.volmlib.util.nbt.tag.Tag<?>, BlockState> outerDecodeCache/' \
             Iris/adapters/bukkit/nms/v26_2_R1/src/main/java/art/arcane/iris/platform/bukkit/nms/v26_2_R1/NMSBinding.java
+
+      - name: Patch VolmLib module resolution
+        run: |
+          sed -i \
+            "/substitute(module('com.github.VolmitSoftware.VolmLib:packaging')).using(project(':packaging'))/a\\
+            substitute(module('com.github.VolmitSoftware.VolmLib:native-api')).using(project(':native-api'))\\
+            substitute(module('com.github.VolmitSoftware.VolmLib:native-v26_2_R1')).using(project(':native:v26_2_R1'))" \
+          Iris/gradle/volmlib-resolution.settings.gradle      
             
       - name: Java 25 setup
         uses: actions/setup-java@v4
