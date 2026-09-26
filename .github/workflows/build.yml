@@ -1,4 +1,4 @@
-name: Build Iris
+nname: Build Iris
 
 on:
   workflow_dispatch:
@@ -8,11 +8,19 @@ jobs:
     name: Gradle build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Iris
         uses: actions/checkout@v4
         with:
           repository: VolmitSoftware/Iris
           ref: 4.1.1-26.1.2-26.2
+          path: Iris
+
+      - name: Checkout VolmLib
+        uses: actions/checkout@v4
+        with:
+          repository: VolmitSoftware/VolmLib
+          ref: master
+          path: VolmLib
 
       - name: Java 25 setup
         uses: actions/setup-java@v4
@@ -22,13 +30,16 @@ jobs:
           cache: 'gradle'
 
       - name: Make gradlew executable
-        run: chmod +x gradlew
+        run: chmod +x Iris/gradlew
 
       - name: Build all platforms
-        run: ./gradlew buildAllToOut --no-parallel
+        working-directory: Iris
+        env:
+          VOLMLIB_DIR: ${{ github.workspace }}/VolmLib
+        run: ./gradlew buildAllToOut --no-parallel -PuseLocalVolmLib=true
 
       - name: Upload built jars
         uses: actions/upload-artifact@v4
         with:
           name: iris-jars
-          path: out/**/*.jar
+          path: Iris/out/**/*.jar
