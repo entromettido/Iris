@@ -1,4 +1,4 @@
-nname: Build Iris
+name: Build Iris
 
 on:
   workflow_dispatch:
