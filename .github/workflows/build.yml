@@ -1,0 +1,31 @@
+name: Build Iris
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Gradle build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Java 25 setup
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: 'gradle'
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Build all platforms
+        run: ./gradlew buildAllToOut --no-parallel -PuseLocalVolmLib=false
+
+      - name: Upload built jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: iris-jars
+          path: out/**/*.jar
