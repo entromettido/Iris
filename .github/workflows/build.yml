@@ -59,6 +59,7 @@ jobs:
           import art.arcane.volmlib.util.math.M;
           import art.arcane.volmlib.util.nbt.tag.CompoundTag;
           import art.arcane.iris.generation.concurrent.HyperLock;
+          import art.arcane.volmlib.util.nbt.tag.Tag;
           import org.bukkit.NamespacedKey;
           import org.bukkit.Registry;
           import org.bukkit.block.Biome;
@@ -157,8 +158,8 @@ jobs:
                           }
                   );
               }
-
-              public static BlockData getBlockData(CompoundTag tag) {
+            
+              public static BlockData getBlockData(Tag<?> tag) {
                   return Holder.BLOCK_STATE_CODEC.decode(tag);
               }
 
