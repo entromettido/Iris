@@ -11,6 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          repository: VolmitSoftware/Iris
           ref: 4.1.1-26.1.2-26.2
 
       - name: Java 25 setup
